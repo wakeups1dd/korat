@@ -1,17 +1,35 @@
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { label: "HOME", path: "/" },
     { label: "ANALYZE", path: "/dashboard" },
-    { label: "DOCS", path: "#" },
+    { label: "DOCS", path: "#", external: true },
   ];
+
+  const handleStartFree = () => {
+    if (location.pathname === "/") {
+      // Scroll to URL input if on home page
+      const urlInput = document.getElementById("url-input-section");
+      urlInput?.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      // Navigate to home page first
+      navigate("/");
+      // Wait for navigation then scroll
+      setTimeout(() => {
+        const urlInput = document.getElementById("url-input-section");
+        urlInput?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+    setIsMenuOpen(false);
+  };
 
   return (
     <motion.header
@@ -32,20 +50,32 @@ const Header = () => {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.path}
-              className={`font-mono text-sm font-bold tracking-wide transition-colors hover:text-primary ${
-                location.pathname === item.path ? "text-primary" : ""
-              }`}
-            >
-              {item.label}
-            </Link>
+            item.external ? (
+              <a
+                key={item.label}
+                href={item.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-sm font-bold tracking-wide transition-colors hover:text-primary"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.label}
+                to={item.path}
+                className={`font-mono text-sm font-bold tracking-wide transition-colors hover:text-primary ${location.pathname === item.path ? "text-primary" : ""
+                  }`}
+              >
+                {item.label}
+              </Link>
+            )
           ))}
           <motion.button
             className="btn-brutal-primary"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleStartFree}
           >
             START FREE
           </motion.button>
@@ -69,16 +99,31 @@ const Header = () => {
         >
           <nav className="flex flex-col gap-2 p-4">
             {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                className="border-[2px] border-foreground p-3 font-mono text-sm font-bold"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.label}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-[2px] border-foreground p-3 font-mono text-sm font-bold"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  className="border-[2px] border-foreground p-3 font-mono text-sm font-bold"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
-            <button className="btn-brutal-primary mt-2">START FREE</button>
+            <button className="btn-brutal-primary mt-2" onClick={handleStartFree}>
+              START FREE
+            </button>
           </nav>
         </motion.div>
       )}

@@ -1,18 +1,19 @@
 import { motion } from "framer-motion";
-import { 
-  Globe, 
-  Gauge, 
-  Eye, 
-  Code, 
-  FileText, 
-  Link2, 
-  Image, 
+import {
+  Globe,
+  Gauge,
+  Eye,
+  Code,
+  FileText,
+  Link2,
+  Image,
   Shield,
   ArrowLeft,
   ExternalLink,
-  RefreshCw 
+  RefreshCw
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useURL } from "@/contexts/URLContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOScoreCard from "@/components/SEOScoreCard";
@@ -21,7 +22,6 @@ import Marquee from "@/components/Marquee";
 
 // Mock data for the dashboard
 const mockSiteData = {
-  url: "example.com",
   scannedAt: "2 minutes ago",
   scores: {
     overall: 67,
@@ -137,6 +137,22 @@ const technicalIssues: AuditIssue[] = [
 ];
 
 const Dashboard = () => {
+  const { scannedURL } = useURL();
+  const navigate = useNavigate();
+
+  const handleViewSite = () => {
+    // Format URL with https:// if not present
+    let formattedURL = scannedURL;
+    if (!scannedURL.startsWith('http://') && !scannedURL.startsWith('https://')) {
+      formattedURL = `https://${scannedURL}`;
+    }
+    window.open(formattedURL, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleRescan = () => {
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -164,7 +180,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold uppercase tracking-tight md:text-4xl">
-                    {mockSiteData.url}
+                    {scannedURL}
                   </h1>
                   <p className="font-mono text-sm text-muted-foreground">
                     Scanned {mockSiteData.scannedAt}
@@ -178,6 +194,7 @@ const Dashboard = () => {
                 className="btn-brutal flex items-center gap-2 bg-card"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={handleViewSite}
               >
                 <ExternalLink className="h-4 w-4" />
                 VIEW SITE
@@ -186,6 +203,7 @@ const Dashboard = () => {
                 className="btn-brutal-primary flex items-center gap-2"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={handleRescan}
               >
                 <RefreshCw className="h-4 w-4" />
                 RE-SCAN

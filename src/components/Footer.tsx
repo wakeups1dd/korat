@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
+import { Github, Twitter, Linkedin } from "lucide-react";
 
 const Footer = () => {
+  const socialLinks = [
+    { label: "X", icon: Twitter, href: "https://twitter.com" },
+    { label: "GH", icon: Github, href: "https://github.com" },
+    { label: "LI", icon: Linkedin, href: "https://linkedin.com" },
+  ];
+
   return (
     <footer className="border-t-[3px] border-foreground bg-foreground text-background">
       <div className="mx-auto max-w-7xl px-4 py-12">
@@ -22,20 +29,20 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 font-mono text-sm font-bold uppercase">Product</h4>
             <ul className="space-y-2 font-mono text-sm text-muted">
-              <li><a href="#" className="transition-colors hover:text-primary">Features</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">Pricing</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">API</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">Changelog</a></li>
+              <li><a href="#features" className="transition-colors hover:text-primary">Features</a></li>
+              <li><a href="#pricing" className="transition-colors hover:text-primary">Pricing</a></li>
+              <li><a href="#api" className="transition-colors hover:text-primary">API</a></li>
+              <li><a href="#changelog" className="transition-colors hover:text-primary">Changelog</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="mb-4 font-mono text-sm font-bold uppercase">Company</h4>
             <ul className="space-y-2 font-mono text-sm text-muted">
-              <li><a href="#" className="transition-colors hover:text-primary">About</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">Blog</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">Contact</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">Privacy</a></li>
+              <li><a href="#about" className="transition-colors hover:text-primary">About</a></li>
+              <li><a href="#blog" className="transition-colors hover:text-primary">Blog</a></li>
+              <li><a href="#contact" className="transition-colors hover:text-primary">Contact</a></li>
+              <li><a href="#privacy" className="transition-colors hover:text-primary">Privacy</a></li>
             </ul>
           </div>
         </div>
@@ -51,13 +58,16 @@ const Footer = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            {["X", "GH", "LI"].map((social) => (
+            {socialLinks.map((social) => (
               <a
-                key={social}
-                href="#"
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-8 w-8 items-center justify-center border-[2px] border-muted font-mono text-xs font-bold transition-colors hover:border-primary hover:text-primary"
+                aria-label={social.label}
               >
-                {social}
+                {social.label}
               </a>
             ))}
           </motion.div>

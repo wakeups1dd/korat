@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Zap, Target, BarChart3, Bug, ArrowRight } from "lucide-react";
+import { useURL } from "@/contexts/URLContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import URLInput from "@/components/URLInput";
@@ -38,15 +39,22 @@ const features = [
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { setScannedURL } = useURL();
 
   const handleSubmit = (url: string) => {
     setIsLoading(true);
+    setScannedURL(url);
     console.log("Analyzing:", url);
   };
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
     navigate("/dashboard");
+  };
+
+  const handleCTAClick = () => {
+    const urlInput = document.getElementById("url-input-section");
+    urlInput?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -94,7 +102,7 @@ const Index = () => {
             </motion.p>
 
             {/* URL Input */}
-            <div className="flex justify-center">
+            <div id="url-input-section" className="flex justify-center">
               <URLInput onSubmit={handleSubmit} isLoading={isLoading} />
             </div>
 
@@ -207,6 +215,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              onClick={handleCTAClick}
             >
               START YOUR FREE AUDIT
               <ArrowRight className="h-5 w-5" />
