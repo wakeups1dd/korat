@@ -62,7 +62,7 @@ const URLInput = ({ onSubmit, isLoading = false }: URLInputProps) => {
               className="w-full bg-transparent font-mono text-xl font-bold tracking-tight placeholder:text-muted-foreground focus:outline-none md:text-2xl"
               disabled={isLoading}
             />
-            <span className="blink absolute right-0 top-1/2 h-6 w-[3px] -translate-y-1/2 bg-foreground" />
+            
           </div>
 
           {/* Submit button */}
