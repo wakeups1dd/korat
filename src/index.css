@@ -2,95 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* 
+  KORAT Design System
+  Neo-Brutalist + Grunge + Y2K Fusion
+  Bold, raw, unapologetic
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core palette */
+    --background: 60 20% 96%;
+    --foreground: 0 0% 8%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 60 20% 94%;
+    --card-foreground: 0 0% 8%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 60 20% 96%;
+    --popover-foreground: 0 0% 8%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Acid Green - Primary */
+    --primary: 72 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Electric Blue */
+    --secondary: 210 100% 55%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Hot Pink - Accent */
+    --accent: 330 100% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Muted tones */
+    --muted: 60 10% 85%;
+    --muted-foreground: 0 0% 40%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status colors */
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --warning: 45 100% 50%;
+    --warning-foreground: 0 0% 0%;
 
-    --radius: 0.5rem;
+    --success: 120 60% 45%;
+    --success-foreground: 0 0% 100%;
 
-    --sidebar-background: 0 0% 98%;
+    /* UI elements */
+    --border: 0 0% 0%;
+    --input: 60 20% 94%;
+    --ring: 72 100% 50%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --radius: 0px;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Custom brutalist tokens */
+    --border-thick: 3px;
+    --shadow-brutal: 6px 6px 0px hsl(0 0% 0%);
+    --shadow-brutal-sm: 3px 3px 0px hsl(0 0% 0%);
+    --shadow-brutal-accent: 6px 6px 0px hsl(330 100% 60%);
+    --shadow-brutal-primary: 6px 6px 0px hsl(72 100% 50%);
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar */
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 60 20% 96%;
+    --sidebar-primary: 72 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 330 100% 60%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 72 100% 50%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 6%;
+    --foreground: 60 20% 96%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 60 20% 96%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 60 20% 96%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 72 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 100% 55%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 330 100% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 60 10% 60%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 60 20% 96%;
+    --input: 0 0% 15%;
+    --ring: 72 100% 50%;
+
+    --shadow-brutal: 6px 6px 0px hsl(60 20% 96%);
+    --shadow-brutal-sm: 3px 3px 0px hsl(60 20% 96%);
   }
 }
 
@@ -100,6 +113,156 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer components {
+  /* Brutalist card */
+  .card-brutal {
+    @apply border-[3px] border-foreground bg-card;
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .card-brutal:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px hsl(var(--foreground));
+  }
+
+  /* Chunky buttons */
+  .btn-brutal {
+    @apply border-[3px] border-foreground px-6 py-3 font-bold uppercase tracking-wide transition-all;
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .btn-brutal:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px hsl(var(--foreground));
+  }
+
+  .btn-brutal:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .btn-brutal-primary {
+    @apply btn-brutal bg-primary text-primary-foreground;
+  }
+
+  .btn-brutal-accent {
+    @apply btn-brutal bg-accent text-accent-foreground;
+  }
+
+  .btn-brutal-secondary {
+    @apply btn-brutal bg-secondary text-secondary-foreground;
+  }
+
+  /* Glitch text effect */
+  .glitch {
+    position: relative;
+    animation: glitch 2s infinite;
+  }
+
+  @keyframes glitch {
+    0%, 90%, 100% {
+      transform: translate(0);
+    }
+    92% {
+      transform: translate(-2px, 1px);
+    }
+    94% {
+      transform: translate(2px, -1px);
+    }
+    96% {
+      transform: translate(-1px, 2px);
+    }
+    98% {
+      transform: translate(1px, -2px);
+    }
+  }
+
+  /* Scanline effect */
+  .scanlines::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
+  }
+
+  /* Blink cursor */
+  .blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Tag/sticker styles */
+  .tag-brutal {
+    @apply inline-block border-2 border-foreground px-2 py-0.5 text-xs font-bold uppercase;
+    transform: rotate(-2deg);
+  }
+
+  .sticker {
+    @apply inline-block border-[3px] border-foreground px-3 py-1 font-mono text-sm font-bold;
+    box-shadow: var(--shadow-brutal-sm);
+    transform: rotate(2deg);
+  }
+
+  /* Progress bar brutal */
+  .progress-brutal {
+    @apply h-6 w-full border-[3px] border-foreground bg-muted;
+  }
+
+  .progress-brutal-fill {
+    @apply h-full transition-all duration-500;
+  }
+
+  /* Input brutal */
+  .input-brutal {
+    @apply border-[3px] border-foreground bg-card px-4 py-3 font-mono text-lg;
+    box-shadow: var(--shadow-brutal-sm);
+  }
+
+  .input-brutal:focus {
+    @apply outline-none ring-0;
+    box-shadow: var(--shadow-brutal);
+    transform: translate(-2px, -2px);
+  }
+
+  /* Marquee */
+  .marquee {
+    animation: marquee 20s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 }
