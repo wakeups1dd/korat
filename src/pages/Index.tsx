@@ -64,16 +64,6 @@ const Index = () => {
           <div className="absolute right-1/4 top-32 h-16 w-16 rotate-45 border-[3px] border-foreground bg-secondary opacity-20" />
 
           <div className="relative mx-auto max-w-5xl text-center">
-            {/* Sticker badge */}
-            <motion.div
-              className="sticker mb-8 inline-block bg-accent text-accent-foreground"
-              initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 2 }}
-              transition={{ duration: 0.5 }}
-            >
-              ⚡ SEO MADE RAW
-            </motion.div>
-
             {/* Main headline */}
             <motion.h1
               className="mb-6 text-5xl font-bold uppercase leading-none tracking-tighter md:text-7xl lg:text-8xl"
@@ -114,17 +104,16 @@ const Index = () => {
 
             {/* Trust badges */}
             <motion.div
-              className="mt-12 flex flex-wrap items-center justify-center gap-4"
+              className="mt-12 flex flex-wrap items-center justify-center gap-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
               {["10K+ SITES SCANNED", "NO SIGNUP REQUIRED", "100% FREE TIER"].map(
-                (badge, i) => (
+                (badge) => (
                   <div
                     key={badge}
                     className="tag-brutal bg-card"
-                    style={{ transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)` }}
                   >
                     {badge}
                   </div>
