@@ -58,10 +58,6 @@ const Index = () => {
 
         {/* Hero Section */}
         <section className="relative overflow-hidden px-4 pb-16 pt-32 md:pb-24 md:pt-40">
-          {/* Background decoration */}
-          <div className="absolute left-10 top-40 h-32 w-32 rotate-12 border-[3px] border-foreground bg-primary opacity-20" />
-          <div className="absolute bottom-20 right-10 h-24 w-24 -rotate-12 border-[3px] border-foreground bg-accent opacity-20" />
-          <div className="absolute right-1/4 top-32 h-16 w-16 rotate-45 border-[3px] border-foreground bg-secondary opacity-20" />
 
           <div className="relative mx-auto max-w-5xl text-center">
             {/* Main headline */}
