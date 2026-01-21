@@ -226,7 +226,6 @@
   /* Tag/sticker styles */
   .tag-brutal {
     @apply inline-block border-2 border-foreground px-2 py-0.5 text-xs font-bold uppercase;
-    transform: rotate(-2deg);
   }
 
   .sticker {
