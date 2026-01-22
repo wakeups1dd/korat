@@ -227,13 +227,7 @@ const Signup = () => {
                         >
                             SIGN UP WITH GOOGLE
                         </button>
-                        <button
-                            type="button"
-                            className="btn-brutal w-full bg-card hover:bg-muted"
-                            onClick={() => toast({ title: "Coming Soon", description: "GitHub signup will be available soon!" })}
-                        >
-                            SIGN UP WITH GITHUB
-                        </button>
+
                     </div>
                 </motion.div>
 
