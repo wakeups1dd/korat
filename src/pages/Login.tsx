@@ -68,11 +68,8 @@ const Login = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                 >
-                    <div className="sticker mb-4 bg-accent text-accent-foreground">
-                        SECURE ACCESS
-                    </div>
                     <h1 className="glitch text-4xl font-bold uppercase tracking-tight md:text-5xl">
-                        WELCOME BACK
+                        WELCOME
                     </h1>
                     <p className="mt-2 font-mono text-sm text-muted-foreground">
                         Enter your credentials to break some SEO
