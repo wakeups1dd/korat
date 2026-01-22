@@ -13,7 +13,7 @@ const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { signup } = useAuth();
     const { toast } = useToast();
 
     const handleSubmit = async (e: FormEvent) => {
@@ -31,15 +31,19 @@ const Signup = () => {
         setIsLoading(true);
 
         try {
-            // In a real app, you'd call your signup API here
-            // For now, we'll just log them in directly
-            const success = await login(email, password);
+            const success = await signup(email, password, name);
             if (success) {
                 toast({
                     title: "ACCOUNT CREATED",
                     description: "Welcome to KORAT!",
                 });
                 navigate("/");
+            } else {
+                toast({
+                    title: "SIGNUP FAILED",
+                    description: "Could not create account. Email may already exist.",
+                    variant: "destructive",
+                });
             }
         } catch (error) {
             toast({
