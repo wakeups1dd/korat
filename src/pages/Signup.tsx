@@ -54,18 +54,6 @@ const Signup = () => {
 
     return (
         <div className="min-h-screen bg-background flex items-center justify-center p-4">
-            {/* Decorative elements */}
-            <motion.div
-                className="fixed top-10 right-10 h-20 w-20 border-[3px] border-foreground bg-secondary rotate-12"
-                animate={{ rotate: [12, -12, 12] }}
-                transition={{ duration: 4, repeat: Infinity }}
-            />
-            <motion.div
-                className="fixed bottom-10 left-10 h-16 w-16 border-[3px] border-foreground bg-primary -rotate-12"
-                animate={{ rotate: [-12, 12, -12] }}
-                transition={{ duration: 3, repeat: Infinity }}
-            />
-
             {/* Main signup card */}
             <motion.div
                 className="w-full max-w-md"
