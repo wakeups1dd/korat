@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Pixel art cat with transparent background -->
+  <g shape-rendering="crispEdges">
+    <!-- Ears -->
+    <rect x="10" y="5" width="1" height="1" fill="#2D3142"/>
+    <rect x="11" y="6" width="1" height="1" fill="#2D3142"/>
+    <rect x="12" y="7" width="1" height="1" fill="#2D3142"/>
+    <rect x="11" y="7" width="1" height="1" fill="#FFB3BA"/>
+    <rect x="10" y="6" width="1" height="1" fill="#FFB3BA"/>
+    
+    <rect x="21" y="5" width="1" height="1" fill="#2D3142"/>
+    <rect x="20" y="6" width="1" height="1" fill="#2D3142"/>
+    <rect x="19" y="7" width="1" height="1" fill="#2D3142"/>
+    <rect x="20" y="7" width="1" height="1" fill="#FFB3BA"/>
+    <rect x="21" y="6" width="1" height="1" fill="#FFB3BA"/>
+    
+    <!-- Head outline -->
+    <rect x="9" y="8" width="1" height="1" fill="#2D3142"/>
+    <rect x="10" y="9" width="1" height="1" fill="#2D3142"/>
+    <rect x="11" y="10" width="1" height="1" fill="#2D3142"/>
+    <rect x="12" y="11" width="1" height="1" fill="#2D3142"/>
+    <rect x="13" y="12" width="1" height="1" fill="#2D3142"/>
+    <rect x="14" y="13" width="1" height="1" fill="#2D3142"/>
+    <rect x="15" y="13" width="1" height="1" fill="#2D3142"/>
+    <rect x="16" y="13" width="1" height="1" fill="#2D3142"/>
+    <rect x="17" y="13" width="1" height="1" fill="#2D3142"/>
+    <rect x="18" y="12" width="1" height="1" fill="#2D3142"/>
+    <rect x="19" y="11" width="1" height="1" fill="#2D3142"/>
+    <rect x="20" y="10" width="1" height="1" fill="#2D3142"/>
+    <rect x="21" y="9" width="1" height="1" fill="#2D3142"/>
+    <rect x="22" y="8" width="1" height="1" fill="#2D3142"/>
+    
+    <!-- Head fill (gray) -->
+    <rect x="10" y="8" width="12" height="1" fill="#8B8D98"/>
+    <rect x="11" y="9" width="10" height="1" fill="#8B8D98"/>
+    <rect x="12" y="10" width="8" height="1" fill="#8B8D98"/>
+    <rect x="13" y="11" width="6" height="1" fill="#8B8D98"/>
+    <rect x="14" y="12" width="4" height="1" fill="#8B8D98"/>
+    
+    <!-- Eyes -->
+    <rect x="12" y="10" width="2" height="2" fill="#2D3142"/>
+    <rect x="18" y="10" width="2" height="2" fill="#2D3142"/>
+    <rect x="12" y="10" width="1" height="1" fill="#BFFF00"/>
+    <rect x="18" y="10" width="1" height="1" fill="#BFFF00"/>
+    <rect x="13" y="10" width="1" height="1" fill="#FFFFFF"/>
+    <rect x="19" y="10" width="1" height="1" fill="#FFFFFF"/>
+    
+    <!-- Nose -->
+    <rect x="15" y="11" width="2" height="1" fill="#FFB3BA"/>
+    
+    <!-- Body outline -->
+    <rect x="10" y="14" width="1" height="1" fill="#2D3142"/>
+    <rect x="11" y="15" width="1" height="1" fill="#2D3142"/>
+    <rect x="12" y="16" width="1" height="1" fill="#2D3142"/>
+    <rect x="13" y="17" width="1" height="1" fill="#2D3142"/>
+    <rect x="14" y="18" width="1" height="1" fill="#2D3142"/>
+    <rect x="15" y="19" width="1" height="1" fill="#2D3142"/>
+    <rect x="16" y="19" width="1" height="1" fill="#2D3142"/>
+    <rect x="17" y="18" width="1" height="1" fill="#2D3142"/>
+    <rect x="18" y="17" width="1" height="1" fill="#2D3142"/>
+    <rect x="19" y="16" width="1" height="1" fill="#2D3142"/>
+    <rect x="20" y="15" width="1" height="1" fill="#2D3142"/>
+    <rect x="21" y="14" width="1" height="1" fill="#2D3142"/>
+    
+    <!-- Body fill -->
+    <rect x="11" y="14" width="10" height="1" fill="#6B6D7A"/>
+    <rect x="12" y="15" width="8" height="1" fill="#6B6D7A"/>
+    <rect x="13" y="16" width="6" height="1" fill="#6B6D7A"/>
+    <rect x="14" y="17" width="4" height="1" fill="#6B6D7A"/>
+    <rect x="15" y="18" width="2" height="1" fill="#6B6D7A"/>
+    
+    <!-- Paws -->
+    <rect x="13" y="19" width="2" height="1" fill="#8B8D98"/>
+    <rect x="17" y="19" width="2" height="1" fill="#8B8D98"/>
+    
+    <!-- Tail -->
+    <rect x="22" y="14" width="1" height="1" fill="#2D3142"/>
+    <rect x="23" y="15" width="1" height="1" fill="#2D3142"/>
+    <rect x="24" y="16" width="1" height="1" fill="#2D3142"/>
+    <rect x="23" y="16" width="1" height="1" fill="#6B6D7A"/>
+    <rect x="22" y="15" width="1" height="1" fill="#6B6D7A"/>
+  </g>
+</svg>
