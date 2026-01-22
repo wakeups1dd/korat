@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut, LogIn } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuthenticated, logout, user } = useAuth();
 
   const navItems = [
     { label: "HOME", path: "/" },
@@ -27,6 +29,16 @@ const Header = () => {
         const urlInput = document.getElementById("url-input-section");
         urlInput?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 100);
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleAuthAction = () => {
+    if (isAuthenticated) {
+      logout();
+      navigate("/");
+    } else {
+      navigate("/login");
     }
     setIsMenuOpen(false);
   };
@@ -71,13 +83,33 @@ const Header = () => {
               </Link>
             )
           ))}
+          {!isAuthenticated && (
+            <motion.button
+              className="btn-brutal-primary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleStartFree}
+            >
+              START FREE
+            </motion.button>
+          )}
           <motion.button
-            className="btn-brutal-primary"
+            className={isAuthenticated ? "btn-brutal bg-card flex items-center gap-2" : "btn-brutal-accent flex items-center gap-2"}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={handleStartFree}
+            onClick={handleAuthAction}
           >
-            START FREE
+            {isAuthenticated ? (
+              <>
+                <LogOut className="h-4 w-4" />
+                <span>LOGOUT</span>
+              </>
+            ) : (
+              <>
+                <LogIn className="h-4 w-4" />
+                <span>LOGIN</span>
+              </>
+            )}
           </motion.button>
         </nav>
 
@@ -121,8 +153,16 @@ const Header = () => {
                 </Link>
               )
             ))}
-            <button className="btn-brutal-primary mt-2" onClick={handleStartFree}>
-              START FREE
+            {!isAuthenticated && (
+              <button className="btn-brutal-primary mt-2" onClick={handleStartFree}>
+                START FREE
+              </button>
+            )}
+            <button
+              className={isAuthenticated ? "btn-brutal bg-card mt-2" : "btn-brutal-accent mt-2"}
+              onClick={handleAuthAction}
+            >
+              {isAuthenticated ? "LOGOUT" : "LOGIN"}
             </button>
           </nav>
         </motion.div>
