@@ -37,7 +37,7 @@ const Signup = () => {
                     title: "ACCOUNT CREATED",
                     description: "Welcome to KORAT!",
                 });
-                navigate("/");
+                navigate("/dashboard");
             } else {
                 toast({
                     title: "SIGNUP FAILED",
