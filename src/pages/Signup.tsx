@@ -31,7 +31,7 @@ const Signup = () => {
         setIsLoading(true);
 
         try {
-            const success = await signup(email, password, name);
+            const { success, message } = await signup(email, password, name);
             if (success) {
                 toast({
                     title: "ACCOUNT CREATED",
@@ -41,7 +41,7 @@ const Signup = () => {
             } else {
                 toast({
                     title: "SIGNUP FAILED",
-                    description: "Could not create account. Email may already exist.",
+                    description: message || "Could not create account. Email may already exist.",
                     variant: "destructive",
                 });
             }

@@ -11,21 +11,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
-
-// Helper component to handle root redirection based on auth status
-// We can't use useAuth directly in App because it's outside AuthProvider
-// But we can use it in a child of AuthProvider
-const RootRedirectHandler = () => {
-  const { isAuthenticated } = useAuth();
-  const location = useLocation();
-
-  if (location.pathname === "/" && !isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  return null;
-};
+import PublicRoute from "./components/PublicRoute";
 
 const queryClient = new QueryClient();
 
@@ -38,8 +26,9 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
               <Route path="/landing" element={<Index />} />
               <Route
                 path="/"
@@ -60,12 +49,11 @@ const App = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-            <RootRedirectHandler />
           </BrowserRouter>
-        </TooltipProvider>
-      </URLProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+        </TooltipProvider >
+      </URLProvider >
+    </AuthProvider >
+  </QueryClientProvider >
 );
 
 export default App;

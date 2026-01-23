@@ -6,7 +6,7 @@ interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<boolean>;
-    signup: (email: string, password: string, name: string) => Promise<boolean>;
+    signup: (email: string, password: string, name: string) => Promise<{ success: boolean; message?: string }>;
     logout: () => Promise<void>;
     loading: boolean;
 }
@@ -36,7 +36,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return () => subscription.unsubscribe();
     }, []);
 
-    const signup = async (email: string, password: string, name: string): Promise<boolean> => {
+    interface AuthResponse {
+        success: boolean;
+        message?: string;
+    }
+
+    const signup = async (email: string, password: string, name: string): Promise<AuthResponse> => {
         try {
             const { data, error } = await supabase.auth.signUp({
                 email,
@@ -50,18 +55,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             if (error) {
                 console.error('Signup error:', error.message);
-                return false;
+                return { success: false, message: error.message };
             }
 
             if (data.user) {
                 setUser(data.user);
-                return true;
+                return { success: true };
             }
 
-            return false;
-        } catch (error) {
+            return { success: false, message: "Signup successful but user data is missing. Please check your email for verification." };
+        } catch (error: any) {
             console.error('Signup exception:', error);
-            return false;
+            return { success: false, message: error.message || "An unexpected error occurred." };
         }
     };
 
