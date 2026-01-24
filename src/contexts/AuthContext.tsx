@@ -120,26 +120,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    // TEMPORARY BYPASS: Mock user to allow access without login
-    const MOCK_USER = {
-        id: 'mock-user-id',
-        app_metadata: {},
-        user_metadata: {},
-        aud: 'authenticated',
-        created_at: new Date().toISOString(),
-        email: 'mock@example.com'
-    } as any;
-
     return (
-        <AuthContext.Provider value={{
-            user: MOCK_USER,
-            isAuthenticated: true,
-            login,
-            signup,
-            loginWithGoogle,
-            logout,
-            loading: false
-        }}>
+        <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, signup, loginWithGoogle, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
