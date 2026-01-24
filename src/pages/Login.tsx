@@ -11,7 +11,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, loginWithGoogle } = useAuth();
     const { toast } = useToast();
 
     const handleSubmit = async (e: FormEvent) => {
@@ -178,7 +178,20 @@ const Login = () => {
                         <button
                             type="button"
                             className="btn-brutal w-full bg-card hover:bg-muted"
-                            onClick={() => toast({ title: "Coming Soon", description: "Google login will be available soon!" })}
+                            onClick={async () => {
+                                setIsLoading(true);
+                                try {
+                                    await loginWithGoogle();
+                                } catch (error) {
+                                    toast({
+                                        title: "LOGIN FAILED",
+                                        description: "Google login failed. Please try again.",
+                                        variant: "destructive",
+                                    });
+                                    setIsLoading(false);
+                                }
+                            }}
+                            disabled={isLoading}
                         >
                             CONTINUE WITH GOOGLE
                         </button>

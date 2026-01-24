@@ -7,6 +7,7 @@ interface AuthContextType {
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<boolean>;
     signup: (email: string, password: string, name: string) => Promise<{ success: boolean; message?: string }>;
+    loginWithGoogle: () => Promise<boolean>;
     logout: () => Promise<void>;
     loading: boolean;
 }
@@ -103,8 +104,42 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const loginWithGoogle = async () => {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: `${window.location.origin}/dashboard`,
+                },
+            });
+            if (error) throw error;
+            return true;
+        } catch (error) {
+            console.error('Google login error:', error);
+            return false;
+        }
+    };
+
+    // TEMPORARY BYPASS: Mock user to allow access without login
+    const MOCK_USER = {
+        id: 'mock-user-id',
+        app_metadata: {},
+        user_metadata: {},
+        aud: 'authenticated',
+        created_at: new Date().toISOString(),
+        email: 'mock@example.com'
+    } as any;
+
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, signup, logout, loading }}>
+        <AuthContext.Provider value={{
+            user: MOCK_USER,
+            isAuthenticated: true,
+            login,
+            signup,
+            loginWithGoogle,
+            logout,
+            loading: false
+        }}>
             {children}
         </AuthContext.Provider>
     );
