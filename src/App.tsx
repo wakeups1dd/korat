@@ -30,14 +30,7 @@ const App = () => (
               <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
               <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
               <Route path="/landing" element={<Index />} />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <Navigate to="/dashboard" replace />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/" element={<Index />} />
               <Route
                 path="/dashboard"
                 element={

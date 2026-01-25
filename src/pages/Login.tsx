@@ -25,7 +25,7 @@ const Login = () => {
                     title: "LOGIN SUCCESSFUL",
                     description: "Welcome back to KORAT!",
                 });
-                navigate("/dashboard");
+                navigate("/");
             } else {
                 toast({
                     title: "LOGIN FAILED",
