@@ -8,6 +8,9 @@ import Footer from "@/components/Footer";
 import URLInput from "@/components/URLInput";
 import Marquee from "@/components/Marquee";
 import LoadingScreen from "@/components/LoadingScreen";
+import { analyzeURL } from "@/lib/api";
+import { supabase } from "@/lib/supabase";
+import { useToast } from "@/hooks/use-toast";
 
 const features = [
   {
@@ -40,11 +43,42 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { setScannedURL } = useURL();
+  const { toast } = useToast();
 
-  const handleSubmit = (url: string) => {
+  const handleSubmit = async (url: string) => {
+    // Check if user is authenticated
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      toast({
+        title: "LOGIN REQUIRED",
+        description: "Sign in to scan URLs and save results",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
     setIsLoading(true);
     setScannedURL(url);
-    console.log("Analyzing:", url);
+
+    try {
+      // Call the API to analyze the URL
+      const result = await analyzeURL(url);
+
+      // Store the audit ID for the dashboard to retrieve
+      localStorage.setItem('lastAuditId', result.id);
+
+      console.log('Analysis complete:', result);
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: "SCAN FAILED",
+        description: error instanceof Error ? error.message : "Failed to analyze URL. Please try again.",
+        variant: "destructive"
+      });
+      return;
+    }
   };
 
   const handleLoadingComplete = () => {

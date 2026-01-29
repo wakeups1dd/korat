@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Globe,
@@ -10,7 +11,8 @@ import {
   Shield,
   ArrowLeft,
   ExternalLink,
-  RefreshCw
+  RefreshCw,
+  Loader2
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useURL } from "@/contexts/URLContext";
@@ -19,6 +21,8 @@ import Footer from "@/components/Footer";
 import SEOScoreCard from "@/components/SEOScoreCard";
 import AuditCard, { AuditIssue } from "@/components/AuditCard";
 import Marquee from "@/components/Marquee";
+import { getAuditById, AuditResult } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data for the dashboard
 const mockSiteData = {
@@ -139,19 +143,99 @@ const technicalIssues: AuditIssue[] = [
 const Dashboard = () => {
   const { scannedURL } = useURL();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [auditData, setAuditData] = useState<AuditResult | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch audit data on mount
+  useEffect(() => {
+    const auditId = localStorage.getItem('lastAuditId');
+
+    if (!auditId) {
+      toast({
+        title: "NO AUDIT FOUND",
+        description: "Please scan a URL first",
+        variant: "destructive"
+      });
+      navigate('/');
+      return;
+    }
+
+    getAuditById(auditId)
+      .then(data => {
+        if (!data) {
+          throw new Error('Audit not found');
+        }
+        setAuditData(data);
+      })
+      .catch(error => {
+        console.error('Error loading audit:', error);
+        toast({
+          title: "LOAD FAILED",
+          description: "Could not load audit data",
+          variant: "destructive"
+        });
+        navigate('/');
+      })
+      .finally(() => setLoading(false));
+  }, [navigate, toast]);
 
   const handleViewSite = () => {
-    // Format URL with https:// if not present
-    let formattedURL = scannedURL;
-    if (!scannedURL.startsWith('http://') && !scannedURL.startsWith('https://')) {
-      formattedURL = `https://${scannedURL}`;
+    if (!auditData) return;
+
+    let formattedURL = auditData.url;
+    if (!formattedURL.startsWith('http://') && !formattedURL.startsWith('https://')) {
+      formattedURL = `https://${formattedURL}`;
     }
     window.open(formattedURL, '_blank', 'noopener,noreferrer');
   };
 
   const handleRescan = () => {
+    localStorage.removeItem('lastAuditId');
     navigate('/');
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4" />
+          <p className="font-mono text-lg">LOADING AUDIT DATA...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // No data state
+  if (!auditData) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="font-mono text-lg mb-4">NO AUDIT DATA FOUND</p>
+          <button onClick={() => navigate('/')} className="btn-brutal-primary">
+            GO HOME
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Calculate time ago
+  const scannedAt = new Date(auditData.scanned_at);
+  const minutesAgo = Math.floor((Date.now() - scannedAt.getTime()) / 60000);
+  const timeAgo = minutesAgo < 1 ? 'just now' : minutesAgo < 60 ? `${minutesAgo} minutes ago` : `${Math.floor(minutesAgo / 60)} hours ago`;
+
+  // Calculate issue counts
+  const allIssues = [
+    ...auditData.performance_issues,
+    ...auditData.seo_issues,
+    ...auditData.accessibility_issues,
+    ...auditData.technical_issues
+  ];
+  const criticalCount = allIssues.filter(i => i.severity === 'error').length;
+  const warningCount = allIssues.filter(i => i.severity === 'warning').length;
+  const passCount = allIssues.filter(i => i.severity === 'pass').length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -180,10 +264,10 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold uppercase tracking-tight md:text-4xl">
-                    {scannedURL}
+                    {auditData.url}
                   </h1>
                   <p className="font-mono text-sm text-muted-foreground">
-                    Scanned {mockSiteData.scannedAt}
+                    Scanned {timeAgo}
                   </p>
                 </div>
               </motion.div>
@@ -231,7 +315,7 @@ const Dashboard = () => {
             transition={{ duration: 0.5, type: "spring" }}
           >
             <span className="font-mono text-[120px] font-bold leading-none text-primary md:text-[180px]">
-              {mockSiteData.scores.overall}
+              {auditData.overall_score}
             </span>
             <span className="absolute -right-8 top-4 font-mono text-3xl text-muted md:-right-12 md:text-4xl">
               /100
@@ -249,7 +333,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <Marquee text="SCANNING COMPLETE • 4 CRITICAL ISSUES • 3 WARNINGS • 6 PASSED CHECKS" />
+      <Marquee text={`SCANNING COMPLETE • ${criticalCount} CRITICAL ISSUES • ${warningCount} WARNINGS • ${passCount} PASSED CHECKS`} />
 
       {/* Score Cards Grid */}
       <section className="px-4 py-12 md:py-16">
@@ -260,30 +344,30 @@ const Dashboard = () => {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <SEOScoreCard
-              score={mockSiteData.scores.performance}
+              score={auditData.performance_score}
               label="PERFORMANCE"
-              change={-5}
+              change={0}
               color="primary"
               delay={0}
             />
             <SEOScoreCard
-              score={mockSiteData.scores.accessibility}
+              score={auditData.accessibility_score}
               label="A11Y"
-              change={+3}
+              change={0}
               color="secondary"
               delay={0.1}
             />
             <SEOScoreCard
-              score={mockSiteData.scores.seo}
+              score={auditData.seo_score}
               label="ON-PAGE SEO"
               change={0}
               color="accent"
               delay={0.2}
             />
             <SEOScoreCard
-              score={mockSiteData.scores.technical}
+              score={auditData.technical_score}
               label="TECHNICAL"
-              change={-2}
+              change={0}
               color="destructive"
               delay={0.3}
             />
@@ -302,25 +386,25 @@ const Dashboard = () => {
             <AuditCard
               title="Performance"
               icon={<Gauge className="h-5 w-5" />}
-              issues={performanceIssues}
+              issues={auditData.performance_issues}
               delay={0}
             />
             <AuditCard
               title="On-Page SEO"
               icon={<FileText className="h-5 w-5" />}
-              issues={seoIssues}
+              issues={auditData.seo_issues}
               delay={0.1}
             />
             <AuditCard
               title="Accessibility"
               icon={<Eye className="h-5 w-5" />}
-              issues={accessibilityIssues}
+              issues={auditData.accessibility_issues}
               delay={0.2}
             />
             <AuditCard
               title="Technical SEO"
               icon={<Code className="h-5 w-5" />}
-              issues={technicalIssues}
+              issues={auditData.technical_issues}
               delay={0.3}
             />
           </div>
@@ -332,10 +416,10 @@ const Dashboard = () => {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: <Link2 className="h-5 w-5" />, label: "Internal Links", value: "47" },
-              { icon: <Image className="h-5 w-5" />, label: "Images", value: "12" },
-              { icon: <FileText className="h-5 w-5" />, label: "Words", value: "1,247" },
-              { icon: <Shield className="h-5 w-5" />, label: "Security Score", value: "A+" },
+              { icon: <Link2 className="h-5 w-5" />, label: "Internal Links", value: auditData.internal_links_count.toString() },
+              { icon: <Image className="h-5 w-5" />, label: "Images", value: auditData.images_count.toString() },
+              { icon: <FileText className="h-5 w-5" />, label: "Words", value: auditData.word_count.toLocaleString() },
+              { icon: <Shield className="h-5 w-5" />, label: "Security Score", value: auditData.security_grade },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
