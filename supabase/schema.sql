@@ -9,7 +9,7 @@
 create table if not exists profiles (
   id uuid references auth.users on delete cascade primary key,
   email text unique not null,
-  full_name text,
+  name text,
   created_at timestamp with time zone default now(),
   updated_at timestamp with time zone default now()
 );
@@ -88,7 +88,7 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  insert into public.profiles (id, email, full_name)
+  insert into public.profiles (id, email, name)
   values (
     new.id,
     new.email,

@@ -2,11 +2,11 @@
 -- Run this AFTER running schema.sql if you have existing users
 
 -- This will create profile entries for any users who signed up before the trigger was added
-insert into public.profiles (id, email, full_name)
+insert into public.profiles (id, email, name)
 select 
   id,
   email,
-  coalesce(raw_user_meta_data->>'name', raw_user_meta_data->>'full_name', 'User') as full_name
+  coalesce(raw_user_meta_data->>'name', raw_user_meta_data->>'full_name', 'User') as name
 from auth.users
 where id not in (select id from public.profiles)
 on conflict (id) do nothing;
